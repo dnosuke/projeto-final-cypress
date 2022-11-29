@@ -4,7 +4,11 @@ const basePage = new BasePage();
 
 // INPUTS
 const nomeInput = "#dashboard-buscar-nome";
+const nomeEditInput = "#editar-usuario-nome";
 const emailInput = "#dashboard-buscar-email";
+const emailEditInput = "#editar-usuario-email";
+const senhaEditInput = "#editar-usuario-senha";
+const senhaConfirmacaoEditInput = "#editar-usuario-confirmar-senha";
 const nomeNovoUsuarioInput = "#novo-usuario-nome";
 const emailNovoUsuarioInput = "#novo-usuario-email";
 const senhaNovoUsuarioInput = "#novo-usuario-senha";
@@ -24,16 +28,25 @@ const voltarBtn = "#drawerContainer-voltar";
 const cadastrarBtn = "#novo-usuario-cadastrar";
 const sairBtn =
   ".css-1o5pq7n > .MuiDrawer-root > .MuiPaper-root > :nth-child(1) > .MuiBox-root > .MuiButton-text";
+const confirmarEditBtn = "#editar-usuario-editar";
+const excluirEditBtn = "#editar-usuario-exccluir";
 
 // RADIOS
 const colaboradorRadio = ".css-1t62lt9 > :nth-child(1)";
 const administradorRadio = ".css-1t62lt9 > :nth-child(2)";
+const administradorEditRadio = "#editar-usuario-colaborador";
+const colaboradorEditRadio = "#editar-usuario-administrador";
 
 // ERRORS TEXTS
 const nomeNovoErrorTxt = "#novo-usuario > :nth-child(1) > .MuiTypography-root";
+const nomeEditErrorTxt =
+  "#editar-usuario > :nth-child(1) > .MuiTypography-root";
 const emailNovoErrorTxt = ":nth-child(2) > .MuiTypography-root";
+const emailEditErrorTxt = ":nth-child(2) > .MuiTypography-root";
 const senhaNovoErrorTxt = ":nth-child(3) > .MuiTypography-root";
+const senhaEditErrorTxt = ":nth-child(3) > .MuiTypography-root";
 const confirmacaoSenhaErrorTxt = ":nth-child(4) > .MuiTypography-root";
+const confirmacaoSenhaEditErrorTxt = ":nth-child(4) > .MuiTypography-root";
 
 export default class Dashboardpage {
   fillFieldNome(text) {

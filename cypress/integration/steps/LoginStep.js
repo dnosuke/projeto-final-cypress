@@ -1,13 +1,15 @@
 /// <reference types="cypress" />
 
 import LoginPage from "../pages/LoginPage";
+
+const adminLogin = require("../../fixtures/adminLogin.json");
 const loginPage = new LoginPage();
 
 context("Login", () => {
   it("Validar fazer login com sucesso", () => {
     cy.allure().feature("Login").story("Dados válidos");
-    loginPage.fillFieldEmail("teste123@dbccompany.com.br");
-    loginPage.fillFieldPassword("qwe123!@#");
+    loginPage.fillFieldEmail(adminLogin.email);
+    loginPage.fillFieldPassword(adminLogin.password);
     loginPage.clickBtnFazerLogin();
     loginPage.validateRedirecionarParaDashboard();
   });

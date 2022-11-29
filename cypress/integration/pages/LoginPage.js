@@ -7,7 +7,7 @@ const password = "#home-senha";
 const btnLogin = "#home-entrar";
 const btnRegister = "#register";
 const loginErrorText = ".Toastify__toast-body > :nth-child(2)";
-const dashboardText = ".MuiToolbar-root > .MuiTypography-root";
+const dashboardURL = "https://vemser-vemser.vercel.app/dashboard";
 const inscricaoTitle = ".MuiBox-root > .MuiTypography-root";
 
 export default class LoginPage {
@@ -32,7 +32,7 @@ export default class LoginPage {
   }
 
   validateRedirecionarParaDashboard() {
-    basePage.validateText(dashboardText, "Dashboard");
+    basePage.validateRedirecionarPagina(dashboardURL);
   }
 
   validateRedirecionarParaInscricao() {

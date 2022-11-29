@@ -2,13 +2,15 @@
 
 import LoginPage from "../pages/LoginPage";
 import DashboardPage from "../pages/DashboardPage";
+
+const adminLogin = require("../../fixtures/adminLogin.json");
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
 
 context("Dashboard", () => {
   beforeEach(() => {
-    loginPage.fillFieldEmail("batman@dbccompany.com.br");
-    loginPage.fillFieldPassword("123");
+    loginPage.fillFieldEmail(adminLogin.email);
+    loginPage.fillFieldPassword(adminLogin.password);
     loginPage.clickBtnFazerLogin();
   });
   it("validar buscar administrador", () => {
