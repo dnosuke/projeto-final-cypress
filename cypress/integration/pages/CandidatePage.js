@@ -14,6 +14,8 @@ const instituicaoInput = "#s2-candidato-instituicao";
 const cursoInput = "#s2-candidato-curso";
 const githubInput = "#s2-candidato-github";
 const motivoInput = "#s2-candidato-motivo";
+const configPCInput = "#s2-candidato-sistema-operacional";
+const linkedinInput = "#s2-candidato-linkedin";
 
 // CHECKBOX
 const desafioCheckbox = "#s2-candidato-desafio";
@@ -22,6 +24,9 @@ const reconhecimentoCheckbox = "#s2-candidato-reconhecimento";
 const altruismoCheckbox = "#s2-candidato-altruismo";
 const outroCheckbox = "#s2-candidato-outro";
 const lgpdCheckbox = "#s2-candidato-lgpd";
+const frontCheckbox = "#s2-candidato-trilha-1";
+const backCheckbox = "#s2-candidato-trilha-2";
+const qaCheckbox = "#s2-candidato-trilha-3";
 
 // RADIOS
 const simRadio = "#s2-candidato-matriculado-sim";
@@ -44,12 +49,11 @@ const confirmacaoTxt = ".MuiAlert-message > .MuiTypography-root";
 const nomeErrorTxt =
   "#s1-candidato-registrar > :nth-child(1) > .MuiTypography-root";
 const lgpdErrorTxt = ".MuiBox-root > .MuiTypography-caption";
-const emailErrorTxt =
-  "#s1-candidato-registrar > :nth-child(2) > .MuiTypography-root";
-const cpfErrorTxt = ":nth-child(3) > .MuiTypography-root";
-const cidadeErrorTxt = ":nth-child(7) > .MuiTypography-root";
-const rgErrorTxt = ":nth-child(5) > .MuiTypography-root";
-const telefoneErrorTxt = ":nth-child(4) > .MuiTypography-root";
+const emailErrorTxt = ":nth-child(4) > .MuiTypography-root";
+const cpfErrorTxt = ":nth-child(5) > .MuiTypography-root";
+const cidadeErrorTxt = ":nth-child(9) > .MuiTypography-root";
+const rgErrorTxt = ":nth-child(7) > .MuiTypography-root";
+const telefoneErrorTxt = ":nth-child(6) > .MuiTypography-root";
 const instituicaoErrorTxt =
   "#s2-candidato-registrar > :nth-child(3) > .MuiTypography-root";
 const instituicaoSuperiorErrorTxt = ".css-gswnji > .MuiTypography-root";
@@ -59,7 +63,13 @@ const checkboxErrorTxt = ":nth-child(5) > .css-j7qwjs > .MuiTypography-caption";
 const githubErrorTxt =
   "#s2-candidato-registrar > :nth-child(6) > .MuiTypography-root";
 const motivoErrorTxt = ":nth-child(5) > .css-j7qwjs > .MuiTypography-caption";
+const configPCErrorTxt = ":nth-child(13) > .MuiTypography-root";
+const choiceLinkedinGithubErrorTxt = ":nth-child(17) > .MuiTypography-root";
 
+// SELECT
+const inglesSelect = "#s1-candidato-ingles";
+const espanholSelect = "#s1-candidato-espanhol";
+const neurodiversidadeSelect = "#s1-candidato-neurodiversidade";
 export default class CandidatePage {
   fillFieldNome(text) {
     basePage.fillInput(nomeInput, text);
@@ -107,6 +117,10 @@ export default class CandidatePage {
 
   fillFieldGithub(text) {
     basePage.fillInput(githubInput, text);
+  }
+
+  fillFieldConfigPC(text) {
+    basePage.fillInput(configPCInput, text);
   }
 
   clickCheckboxMotivo() {
@@ -157,6 +171,10 @@ export default class CandidatePage {
     basePage.click(noiteRadio);
   }
 
+  clickCheckboxFrontend() {
+    basePage.click(frontCheckbox);
+  }
+
   validateInscricaoCompleta() {
     basePage.validateText(
       confirmacaoTxt,
@@ -189,6 +207,13 @@ export default class CandidatePage {
 
   validateCidadeError() {
     basePage.validateText(cidadeErrorTxt, "É necessário no mínimo 3 letras");
+  }
+
+  validateConfigPCError() {
+    basePage.validateText(
+      configPCErrorTxt,
+      "É necessário informar a configuração"
+    );
   }
 
   validateLGPDError() {

@@ -26,6 +26,8 @@ context("Inscrição", () => {
     candidatePage.fillFieldCurso(candidate1.course);
     candidatePage.clickCheckboxMotivo();
     candidatePage.fillFieldMotivo(candidate1.motivation);
+    candidatePage.clickCheckboxFrontend();
+    candidatePage.fillFieldConfigPC(candidate1.config);
     candidatePage.fillFieldGithub(candidate1.github);
 
     candidatePage.clickCheckboxLGPD();
