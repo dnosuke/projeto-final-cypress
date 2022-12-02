@@ -36,6 +36,8 @@ const confirmarExcluirBtn =
   "body > div.MuiDialog-root.MuiModal-root.css-126xj0f > div.MuiDialog-container.MuiDialog-scrollPaper.css-ekeie0 > div > div.MuiDialogActions-root.MuiDialogActions-spacing.css-14b29qc > button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedError.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-root.MuiButton-contained.MuiButton-containedError.MuiButton-sizeMedium.MuiButton-containedSizeMedium.css-16hxacb";
 const naoExcluirBtn = "#editar-usuario-exccluir";
 const buscarInscricoesBtn = ".css-1t62lt9 > .MuiButtonBase-root";
+const avaliacoesBtn =
+  ".css-1o5pq7n > .MuiDrawer-root > .MuiPaper-root > :nth-child(1) > .MuiBox-root > .MuiList-root > :nth-child(3) > .MuiButtonBase-root";
 const inscricoesBtn =
   ".css-1o5pq7n > .MuiDrawer-root > .MuiPaper-root > :nth-child(1) > .MuiBox-root > .MuiList-root > :nth-child(2) > .MuiButtonBase-root";
 
@@ -93,12 +95,20 @@ export default class Dashboardpage {
     basePage.click(buscarBtn);
   }
 
+  clickBtnInscricoes() {
+    basePage.click(inscricoesBtn);
+  }
+
   clickBtnDashboard() {
     basePage.click(dashboardBtn);
   }
 
   clickBtnCadastrar() {
     basePage.click(cadastrarBtn);
+  }
+
+  clickBtnBuscarInscricao() {
+    basePage.click(buscarInscricoesBtn);
   }
 
   clickRadioColaborador() {
@@ -111,6 +121,14 @@ export default class Dashboardpage {
 
   clickBtnConfimarEdit() {
     basePage.click(confirmarEditBtn);
+  }
+
+  clickBtnAvaliacoes() {
+    basePage.click(avaliacoesBtn);
+  }
+
+  clickBtnDeslogar() {
+    basePage.click(sairBtn);
   }
 
   fillFieldNomeEdit(nome) {
@@ -138,8 +156,8 @@ export default class Dashboardpage {
     basePage.fillInput(confirmacaoSenhaNovoUsuarioInput, senhaConfirmacao);
   }
 
-  fillFieldPesquisaInscricoes(text) {
-    basePage.fillInput(pesquisaInscricoesInput, text);
+  fillFieldPesquisaInscricoes(email) {
+    basePage.fillInput(pesquisaInscricoesInput, email);
   }
 
   clickBtnBuscarInscricao() {
@@ -151,9 +169,13 @@ export default class Dashboardpage {
     basePage.validateText(buscaNomeTxt, nome);
   }
 
-  validateBusacarGestorEmail(email) {
+  validateBuscarGestorEmail(email) {
     basePage.time(2000);
     basePage.validateText(buscaEmailTxt, email);
+  }
+
+  validateIsNotVisibleExcluir() {
+    basePage.validateNotExist(excluirEditBtn);
   }
 
   validateAdministradorLogado() {
@@ -204,7 +226,6 @@ export default class Dashboardpage {
 
   deleteNovoUser() {
     basePage.time(2000);
-    basePage.click(resultadoBusca);
     basePage.click(excluirBtn);
     basePage.click(confirmarExcluirBtn);
   }
@@ -220,14 +241,16 @@ export default class Dashboardpage {
   }
 
   listGestor(user) {
+    basePage.clearInput(nomeInput);
     this.fillFieldNome(user.name);
+    basePage.clearInput(emailInput);
     this.fillFieldEmail(user.email);
     this.clickBtnBuscar();
+    basePage.time(2000);
+    basePage.click(resultadoBusca);
   }
 
   editGestor(newUserEdit) {
-    basePage.time(2000);
-    basePage.click(resultadoBusca);
     this.fillFieldNomeEdit(newUserEdit.name);
     this.fillFieldEmailEdit(newUserEdit.email);
     this.clickBtnConfimarEdit();

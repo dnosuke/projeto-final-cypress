@@ -5,6 +5,7 @@ import LoginPage from "../pages/LoginPage";
 import DashboardPage from "../pages/DashboardPage";
 
 const adminLogin = require("../../fixtures/adminLogin.json");
+const colabLogin = require("../../fixtures/colaborador.json");
 const newUser = require("../../fixtures/newUser.json");
 const newUserEdit = require("../../fixtures/newUserEdit.json");
 const basePage = new BasePage();
@@ -26,9 +27,12 @@ context("Dashboard", () => {
 
   it("validar buscar gestor pelo email com sucesso", () => {
     cy.allure().feature("Filtro").story("Dados válidos");
-    dashboardPage.fillFieldEmail("admin@dbccompany.com.br");
+    dashboardPage.createNovoAdministrador(newUser);
+    dashboardPage.fillFieldEmail(newUser.email);
     dashboardPage.clickBtnBuscar();
-    dashboardPage.validateBusacarGestorEmail("admin@dbccompany.com.br");
+    dashboardPage.validateBuscarGestorEmail(newUser.email);
+    dashboardPage.listGestor(newUser);
+    dashboardPage.deleteNovoUser();
   });
 
   it("validar criar gestor com sucesso", () => {
@@ -36,7 +40,7 @@ context("Dashboard", () => {
     dashboardPage.validateCadastroComSucesso();
     dashboardPage.deleteNovoUser(newUser);
   });
-  it.only("validar editar gestor com sucesso", () => {
+  it("validar editar gestor com sucesso", () => {
     dashboardPage.createNovoAdministrador(newUser);
     basePage.time(2000);
     dashboardPage.listGestor(newUser);
@@ -47,22 +51,35 @@ context("Dashboard", () => {
   });
 
   it("validar excluir gestor com sucesso", () => {
+    cy.allure().feature("Dashboard").story("Dados válidos");
     dashboardPage.createNovoAdministrador(newUser);
     basePage.time(2000);
+    dashboardPage.listGestor(newUser);
     dashboardPage.deleteNovoUser(newUser);
     dashboardPage.validateDeletarUserSucesso();
   });
+
+  it.only("validar botão excluir não aparece ao editar um gestor quando logado com conta de colaborador", () => {
+    cy.allure().feature("Dashboard").story("Dados válidos");
+    dashboardPage.clickBtnSair();
+    loginPage.fillFieldEmail(colabLogin.email);
+    loginPage.fillFieldPassword(colabLogin.password);
+    loginPage.clickBtnFazerLogin();
+    dashboardPage.listGestor(adminLogin);
+    dashboardPage.validateIsNotVisibleExcluir();
+  });
   /*   it("validar buscar inscricao com sucesso", () => {
     cy.allure().feature("Dashboard").story("Dados válidos");
-    // login e ir para dashboard e cliclar em inscricoes
-    dashboardPage.fillFieldPesquisaInscricoes("nome");
+    dashboardPage.clickBtnInscricoes();
+    dashboardPage.fillFieldPesquisaInscricoes("Daniel Teste");
     dashboardPage.clickBtnBuscarInscricao();
   });
 
-  it("validar buscar inscricao com nome inexistente", () => {
-    cy.allure().feature("Dashboard").story("Dados válidos");
+  it.only("validar buscar inscricao com nome inexistente", () => {
+    cy.allure().feature("Dashboard").story("Dados inválidos");
     // login e ir para dashboard e cliclar em inscricoes
-    dashboardPage.fillFieldPesquisaInscricoes("nome");
+    dashboardPage.clickBtnInscricoes();
+    dashboardPage.fillFieldPesquisaInscricoes("z");
     dashboardPage.clickBtnBuscarInscricao();
   }); */
 });

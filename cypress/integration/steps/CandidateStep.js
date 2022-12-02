@@ -1,54 +1,33 @@
 /// <reference types="cypress" />
 import CandidatePage from "../pages/CandidatePage";
 import LoginPage from "../pages/LoginPage";
+import { faker } from "@faker-js/faker";
+import BasePage from "../pages/BasePage";
 
 const candidate1 = require("../../fixtures/candidate1.json");
 const candidatePage = new CandidatePage();
 const loginPage = new LoginPage();
+const basePage = new BasePage();
 
 context("Inscrição", () => {
   beforeEach(() => {
     loginPage.clickBtnRegistrar();
   });
   it("Validar inscrição de candidato com sucesso", () => {
+    let email = faker.internet.exampleEmail();
     cy.allure().feature("Inscrição").story("Dados válidos");
-    candidatePage.fillFieldNome(candidate1.name);
-    candidatePage.fillFieldEmail(candidate1.email);
-    candidatePage.fillFieldCPF(candidate1.CPF);
-    candidatePage.fillFieldTelefone(candidate1.phone);
-    candidatePage.fillFieldRG(candidate1.RG);
-    candidatePage.fillFieldCidade(candidate1.city);
-    candidatePage.fillFieldDate("2000-04-17");
-    candidatePage.selectEstado(candidate1.estado);
-    candidatePage.clickBtnProximoStep1();
-
-    candidatePage.clickRadioSim();
-    candidatePage.fillFieldInstituicao(candidate1.institution);
-    candidatePage.fillFieldCurso(candidate1.course);
-    candidatePage.clickCheckboxMotivo();
-    candidatePage.fillFieldMotivo(candidate1.motivation);
-    candidatePage.clickCheckboxFrontend();
-    candidatePage.fillFieldConfigPC(candidate1.config);
-    candidatePage.fillFieldGithub(candidate1.github);
-
-    candidatePage.clickCheckboxLGPD();
-    candidatePage.clickBtnProximoStep2();
-
+    candidatePage.fillCadastroCandidato(candidate1, email);
+    candidatePage.fillFormulario(candidate1);
     candidatePage.validateInscricaoCompleta();
+    basePage.time(2000);
   });
 
   it("Validar inscrição de candidato com dados válidos e marcando não para 'Você é matriculado em algum curso de graduação ou técnico?' retorna mensagem de erro", () => {
     cy.allure().feature("Inscrição").story("Dados válidos");
-    candidatePage.fillFieldNome(candidate1.name);
-    candidatePage.fillFieldEmail(candidate1.email);
-    candidatePage.fillFieldCPF(candidate1.CPF);
-    candidatePage.fillFieldTelefone(candidate1.phone);
-    candidatePage.fillFieldRG(candidate1.RG);
-    candidatePage.fillFieldCidade(candidate1.city);
-    candidatePage.fillFieldDate("2000-04-17");
-    candidatePage.selectEstado(candidate1.estado);
-    candidatePage.clickBtnProximoStep1();
-
+    candidatePage.fillCadastroCandidato(
+      candidate1,
+      faker.internet.exampleEmail()
+    );
     candidatePage.clickRadioNao();
     candidatePage.validateInstituicaoSuperiorError();
   });
@@ -109,16 +88,10 @@ context("Inscrição", () => {
 
   it("Validar botão 'próximo' desabilitado ao não preencher todos os campos obrigatórios do Step 2 com dados válidos", () => {
     cy.allure().feature("Inscrição").story("Dados inválidos");
-    candidatePage.fillFieldNome(candidate1.name);
-    candidatePage.fillFieldEmail(candidate1.email);
-    candidatePage.fillFieldCPF(candidate1.CPF);
-    candidatePage.fillFieldTelefone(candidate1.phone);
-    candidatePage.fillFieldRG(candidate1.RG);
-    candidatePage.fillFieldCidade(candidate1.city);
-    candidatePage.fillFieldDate("2000-04-17");
-    candidatePage.selectEstado(candidate1.estado);
-    candidatePage.clickBtnProximoStep1();
-
+    candidatePage.fillCadastroCandidato(
+      candidate1,
+      faker.internet.exampleEmail()
+    );
     candidatePage.clickRadioSim();
     candidatePage.fillFieldInstituicao(candidate1.institution);
     candidatePage.fillFieldCurso(candidate1.course);

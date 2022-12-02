@@ -1,10 +1,12 @@
 /// <reference types="cypress" />
 
+import BasePage from "../pages/BasePage";
 import LoginPage from "../pages/LoginPage";
 
 const adminLogin = require("../../fixtures/adminLogin.json");
 const colaboradorLogin = require("../../fixtures/colaborador.json");
 const loginPage = new LoginPage();
+const basePage = new BasePage();
 
 context("Login", () => {
   it("Validar fazer login do usuario admin com sucesso", () => {
@@ -28,6 +30,7 @@ context("Login", () => {
     loginPage.fillFieldEmail("lucas");
     loginPage.fillFieldPassword("123");
     loginPage.clickBtnFazerLogin();
+    basePage.time(2000);
     loginPage.validateLoginError();
   });
 
@@ -53,7 +56,7 @@ context("Login", () => {
     loginPage.validateLoginError();
   });
 
-  it("Validar clicar no botao inscrever-se redireciona a página", () => {
+  it("Validar clicar no botao inscrever-se redireciona para página de inscrição", () => {
     cy.allure().feature("Login").story("Dados válidos");
     loginPage.clickBtnRegistrar();
     loginPage.validateRedirecionarParaInscricao();

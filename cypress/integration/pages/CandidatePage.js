@@ -1,5 +1,4 @@
 import BasePage from "./BasePage";
-
 const basePage = new BasePage();
 
 // INPUTS
@@ -262,5 +261,31 @@ export default class CandidatePage {
       motivoErrorTxt,
       "Preencha o campo 'Outro motivo' ou selecione uma das opções acima"
     );
+  }
+
+  fillCadastroCandidato(candidate, email) {
+    this.fillFieldNome(candidate.name);
+    this.fillFieldEmail(email);
+    this.fillFieldCPF(candidate.CPF);
+    this.fillFieldTelefone(candidate.phone);
+    this.fillFieldRG(candidate.RG);
+    this.fillFieldCidade(candidate.city);
+    this.fillFieldDate("2000-04-17");
+    this.selectEstado(candidate.estado);
+    this.clickBtnProximoStep1();
+  }
+
+  fillFormulario(candidate) {
+    this.clickRadioSim();
+    this.fillFieldInstituicao(candidate.institution);
+    this.fillFieldCurso(candidate.course);
+    this.clickCheckboxMotivo();
+    this.fillFieldMotivo(candidate.motivation);
+    this.clickCheckboxFrontend();
+    this.fillFieldConfigPC(candidate.config);
+    this.fillFieldGithub(candidate.github);
+
+    this.clickCheckboxLGPD();
+    this.clickBtnProximoStep2();
   }
 }
