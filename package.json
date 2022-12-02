@@ -12,7 +12,7 @@
     
     "beforetest": "npm run clean:folders",
     
-    "tests": "npm run cy:run && npm run aftertest",
+    "tests": "npm run cy:run || npm run aftertest",
     
     "aftertest": "npm run allure:report",
 

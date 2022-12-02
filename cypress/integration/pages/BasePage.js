@@ -61,4 +61,8 @@ export default class BasePage {
   validateIsDisabled(element) {
     cy.get(element).should("be.disabled");
   }
+
+  haveAttributeDisabled(element) {
+    cy.get(element).should("have.attr", "disabled");
+  }
 }

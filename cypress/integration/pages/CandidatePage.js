@@ -16,6 +16,7 @@ const githubInput = "#s2-candidato-github";
 const motivoInput = "#s2-candidato-motivo";
 const configPCInput = "#s2-candidato-sistema-operacional";
 const linkedinInput = "#s2-candidato-linkedin";
+const dateInput = "#s1-candidato-data-nascimento";
 
 // CHECKBOX
 const desafioCheckbox = "#s2-candidato-desafio";
@@ -49,11 +50,12 @@ const confirmacaoTxt = ".MuiAlert-message > .MuiTypography-root";
 const nomeErrorTxt =
   "#s1-candidato-registrar > :nth-child(1) > .MuiTypography-root";
 const lgpdErrorTxt = ".MuiBox-root > .MuiTypography-caption";
-const emailErrorTxt = ":nth-child(4) > .MuiTypography-root";
+const emailErrorTxt =
+  "#s1-candidato-registrar > :nth-child(2) > .MuiTypography-root";
 const cpfErrorTxt = ":nth-child(5) > .MuiTypography-root";
-const cidadeErrorTxt = ":nth-child(9) > .MuiTypography-root";
-const rgErrorTxt = ":nth-child(7) > .MuiTypography-root";
-const telefoneErrorTxt = ":nth-child(6) > .MuiTypography-root";
+const cidadeErrorTxt = ":nth-child(7) > .MuiTypography-root";
+const rgErrorTxt = ":nth-child(5) > .MuiTypography-root";
+const telefoneErrorTxt = ":nth-child(4) > .MuiTypography-root";
 const instituicaoErrorTxt =
   "#s2-candidato-registrar > :nth-child(3) > .MuiTypography-root";
 const instituicaoSuperiorErrorTxt = ".css-gswnji > .MuiTypography-root";
@@ -123,6 +125,10 @@ export default class CandidatePage {
     basePage.fillInput(configPCInput, text);
   }
 
+  fillFieldDate(text) {
+    basePage.fillInput(dateInput, text);
+  }
+
   clickCheckboxMotivo() {
     basePage.click(outroCheckbox);
   }
@@ -163,8 +169,12 @@ export default class CandidatePage {
     basePage.click(tardeRadio);
   }
 
-  validateBtnProximoDesabilitado() {
-    basePage.validateIsDisabled(proximoBtnS2);
+  validateBtnProximoStep1Desabilitado() {
+    basePage.haveAttributeDisabled(proximoBtnS1);
+  }
+
+  validateBtnProximoStep2Desabilitado() {
+    basePage.haveAttributeDisabled(proximoBtnS2);
   }
 
   clickRadioNoite() {
@@ -197,7 +207,7 @@ export default class CandidatePage {
   validateRgError() {
     basePage.validateText(
       rgErrorTxt,
-      "O RG precisa ter no mínimo 8 caracteres"
+      "O RG precisa ter no mínimo 7 caracteres"
     );
   }
 
@@ -230,7 +240,6 @@ export default class CandidatePage {
   validateCamposVaziosStep1() {
     basePage.validateText(nomeErrorTxt, "O campo de nome é obrigatório");
     basePage.validateText(emailErrorTxt, "Email obrigatório");
-    basePage.validateText(cpfErrorTxt, "CPF obrigatório");
     basePage.validateText(rgErrorTxt, "RG obrigatório");
     basePage.validateText(telefoneErrorTxt, "Telefone obrigatório");
     basePage.validateText(cidadeErrorTxt, "É necessário no mínimo 3 letras");

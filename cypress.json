@@ -1,1 +1,7 @@
-{"video": false, "testFiles": "**/steps/*.*", "chromeWebSecurity": false}
+{
+  "video": false, 
+  "testFiles": "**/steps/*.*", 
+  "chromeWebSecurity": false,
+  "viewportWidth": 1080,
+  "viewportHeight": 900
+}
