@@ -1,1 +1,1 @@
-{"total":0,"items":[]}
+{"total":3,"items":[{"uid":"b6077d305cf415eff81ef378b37d503f","name":"Dashboard","statistic":{"failed":2,"broken":0,"skipped":0,"passed":6,"unknown":0,"total":8}},{"uid":"1a85855463aca3ea10b8fe0fcb3372b8","name":"Login","statistic":{"failed":2,"broken":0,"skipped":0,"passed":5,"unknown":0,"total":7}},{"uid":"875b7d12fae1b1cba25c6c2ae06b7e9d","name":"Inscrição","statistic":{"failed":0,"broken":0,"skipped":0,"passed":10,"unknown":0,"total":10}}]}

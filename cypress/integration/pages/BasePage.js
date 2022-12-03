@@ -54,6 +54,10 @@ export default class BasePage {
     cy.url().should("contain", urlExpected);
   }
 
+  validateNaoRedirecionarPagina(urlExpected) {
+    cy.url().should("not.contain", urlExpected);
+  }
+
   validateNotExist(element) {
     cy.get(element).should("not.exist");
   }

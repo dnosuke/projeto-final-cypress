@@ -40,7 +40,8 @@ const proximoBtnS1 = "#s1-candidato-enviar";
 const proximoBtnS2 = "#s2-candidato-enviar";
 const proximoBtnS3 = "#s3-candidato-enviar";
 const voltarBtn = ".css-mbtjm9";
-const curriculoBtn = ".css-160di52 > .MuiButtonBase-root";
+const curriculoBtn =
+  "#s2-candidato-registrar > div:nth-child(18) > div > div > label";
 
 // TEXTS
 const tituloTxt =

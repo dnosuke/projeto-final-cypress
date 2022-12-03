@@ -1,0 +1,8 @@
+"Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
+"","Dashboard","Dados válidos","1","0","3","0","0"
+"","Login","Dados inválidos","2","0","2","0","0"
+"","Login","Dados válidos","0","0","3","0","0"
+"","Inscrição","Dados válidos","0","0","2","0","0"
+"","Inscrição","Dados inválidos","0","0","8","0","0"
+"","Filtro","Dados válidos","0","0","2","0","0"
+"","","","1","0","1","0","0"

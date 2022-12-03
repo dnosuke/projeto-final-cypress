@@ -7,7 +7,10 @@ import DashboardPage from "../pages/DashboardPage";
 const adminLogin = require("../../fixtures/adminLogin.json");
 const colabLogin = require("../../fixtures/colaborador.json");
 const newUser = require("../../fixtures/newUser.json");
+const newUser2 = require("../../fixtures/newUser2.json");
+const newUser3 = require("../../fixtures/newUser3.json");
 const newUserEdit = require("../../fixtures/newUserEdit.json");
+const newUserEditNaoDbc = require("../../fixtures/newUserEditNaoDbc.json");
 const basePage = new BasePage();
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
@@ -38,34 +41,50 @@ context("Dashboard", () => {
   it("validar criar gestor com sucesso", () => {
     dashboardPage.createNovoAdministrador(newUser);
     dashboardPage.validateCadastroComSucesso();
+    dashboardPage.listGestor(newUser);
     dashboardPage.deleteNovoUser(newUser);
   });
   it("validar editar gestor com sucesso", () => {
-    dashboardPage.createNovoAdministrador(newUser);
+    dashboardPage.createNovoAdministrador(newUser3);
     basePage.time(2000);
-    dashboardPage.listGestor(newUser);
+    dashboardPage.listGestor(newUser3);
     dashboardPage.editGestor(newUserEdit);
     basePage.time(2000);
-    dashboardPage.listGestor(newUser);
-    dashboardPage.deleteNovoUser();
+    dashboardPage.listGestor(newUserEdit);
+    dashboardPage.deleteNovoUser(newUserEdit);
   });
 
   it("validar excluir gestor com sucesso", () => {
     cy.allure().feature("Dashboard").story("Dados válidos");
-    dashboardPage.createNovoAdministrador(newUser);
+    dashboardPage.createNovoAdministrador(newUser2);
     basePage.time(2000);
-    dashboardPage.listGestor(newUser);
-    dashboardPage.deleteNovoUser(newUser);
+    dashboardPage.listGestor(newUser2);
+    dashboardPage.deleteNovoUser(newUser2);
     dashboardPage.validateDeletarUserSucesso();
   });
 
-  it.only("validar botão excluir não aparece ao editar um gestor quando logado com conta de colaborador", () => {
+  it("validar editar gestor com email não @dbccompany.com.br retorna mensagem de erro 'Só é válido o email com @dbccompany.com.br'", () => {
+    cy.allure().feature("Dashboard").story("Dados válidos");
+    dashboardPage.createNovoAdministrador(newUser3);
+    dashboardPage.listGestor(newUser3);
+    dashboardPage.validatePerfilEditErrorEmailNaoDBC(newUserEditNaoDbc);
+  });
+
+  it("validar editar próprio perfil com email não @dbccompany.com.br retorna mensagem de erro 'Só é válido o email com @dbccompany.com.br'", () => {
+    cy.allure().feature("Dashboard").story("Dados válidos");
+    dashboardPage.validatePerfilErrorEmailNaoDBC(newUserEditNaoDbc);
+  });
+
+  it("validar não redirecionar para tela de edição de gestor quando logado com colaborador", () => {
     cy.allure().feature("Dashboard").story("Dados válidos");
     dashboardPage.clickBtnSair();
     loginPage.fillFieldEmail(colabLogin.email);
     loginPage.fillFieldPassword(colabLogin.password);
     loginPage.clickBtnFazerLogin();
     dashboardPage.listGestor(adminLogin);
+    basePage.validateNaoRedirecionarPagina(
+      "https://front-vemser.vercel.app/dashboard/edit-user"
+    );
     dashboardPage.validateIsNotVisibleExcluir();
   });
   /*   it("validar buscar inscricao com sucesso", () => {

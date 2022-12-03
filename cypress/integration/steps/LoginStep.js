@@ -30,7 +30,6 @@ context("Login", () => {
     loginPage.fillFieldEmail("lucas");
     loginPage.fillFieldPassword("123");
     loginPage.clickBtnFazerLogin();
-    basePage.time(2000);
     loginPage.validateLoginError();
   });
 
