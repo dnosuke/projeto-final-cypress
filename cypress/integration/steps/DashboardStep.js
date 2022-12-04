@@ -3,6 +3,8 @@
 import BasePage from "../pages/BasePage";
 import LoginPage from "../pages/LoginPage";
 import DashboardPage from "../pages/DashboardPage";
+import { baseUrl } from "../../support/commands";
+import CandidatePage from "../pages/CandidatePage";
 
 const adminLogin = require("../../fixtures/adminLogin.json");
 const colabLogin = require("../../fixtures/colaborador.json");
@@ -11,15 +13,15 @@ const newUser2 = require("../../fixtures/newUser2.json");
 const newUser3 = require("../../fixtures/newUser3.json");
 const newUserEdit = require("../../fixtures/newUserEdit.json");
 const newUserEditNaoDbc = require("../../fixtures/newUserEditNaoDbc.json");
+const candidate1 = require("../../fixtures/candidate1.json");
 const basePage = new BasePage();
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
+const candidatePage = new CandidatePage();
 
 context("Dashboard", () => {
   beforeEach(() => {
-    loginPage.fillFieldEmail(adminLogin.email);
-    loginPage.fillFieldPassword(adminLogin.password);
-    loginPage.clickBtnFazerLogin();
+    loginPage.login(adminLogin);
   });
   it("validar buscar gestor pelo nome com sucesso", () => {
     cy.allure().feature("Filtro").story("Dados válidos");
@@ -44,7 +46,7 @@ context("Dashboard", () => {
     dashboardPage.listGestor(newUser);
     dashboardPage.deleteNovoUser(newUser);
   });
-  it("validar editar gestor com sucesso", () => {
+  it("validar atualizar dados do gestor com sucesso", () => {
     dashboardPage.createNovoAdministrador(newUser3);
     basePage.time(2000);
     dashboardPage.listGestor(newUser3);
@@ -82,23 +84,28 @@ context("Dashboard", () => {
     loginPage.fillFieldPassword(colabLogin.password);
     loginPage.clickBtnFazerLogin();
     dashboardPage.listGestor(adminLogin);
-    basePage.validateNaoRedirecionarPagina(
-      "https://front-vemser.vercel.app/dashboard/edit-user"
-    );
+    basePage.validateNaoRedirecionarPagina(`${baseUrl}/dashboard/edit-user`);
     dashboardPage.validateIsNotVisibleExcluir();
   });
-  /*   it("validar buscar inscricao com sucesso", () => {
-    cy.allure().feature("Dashboard").story("Dados válidos");
-    dashboardPage.clickBtnInscricoes();
-    dashboardPage.fillFieldPesquisaInscricoes("Daniel Teste");
-    dashboardPage.clickBtnBuscarInscricao();
-  });
+});
 
-  it.only("validar buscar inscricao com nome inexistente", () => {
-    cy.allure().feature("Dashboard").story("Dados inválidos");
-    // login e ir para dashboard e cliclar em inscricoes
-    dashboardPage.clickBtnInscricoes();
-    dashboardPage.fillFieldPesquisaInscricoes("z");
-    dashboardPage.clickBtnBuscarInscricao();
-  }); */
+context("Fluxo de inscrição", () => {
+  it.only("validar fazer inscrição, avaliar inscrição e deletar ", () => {
+    let email = "candidato@gmail.com";
+    cy.allure().feature("Inscrição").story("Dados válidos");
+    cy.visit(`${baseUrl}/register`);
+    candidatePage.fillCadastroCandidato(candidate1, email);
+    candidatePage.fillFormulario(candidate1);
+    basePage.time(2000);
+
+    cy.visit(`${baseUrl}`);
+    loginPage.login(adminLogin);
+    dashboardPage.listInscricao(email);
+    dashboardPage.evaluateInscricoes();
+    dashboardPage.clickResultadoBuscaInscricoes();
+    dashboardPage.clickBtnVoltar();
+    dashboardPage.deletarInscricao(email);
+    basePage.time(2000);
+    dashboardPage.validateDeleteInscricao();
+  });
 });

@@ -34,13 +34,21 @@ const confirmarEditBtn = "#editar-usuario-editar";
 const excluirBtn = "#editar-usuario-exccluir";
 const excluirEditBtn = "#editar-usuario-exccluir";
 const confirmarExcluirBtn =
-  "body > div.MuiDialog-root.MuiModal-root.css-126xj0f > div.MuiDialog-container.MuiDialog-scrollPaper.css-ekeie0 > div > div.MuiDialogActions-root.MuiDialogActions-spacing.css-14b29qc > button.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedError.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-root.MuiButton-contained.MuiButton-containedError.MuiButton-sizeMedium.MuiButton-containedSizeMedium.css-16hxacb";
+  ".MuiDialogActions-root > .MuiButton-containedSecondary";
 const naoExcluirBtn = "#editar-usuario-exccluir";
 const buscarInscricoesBtn = ".css-1t62lt9 > .MuiButtonBase-root";
 const perfilBtn = "#btn-perfil-page";
 const perfilEditBtn = "#perfil-editar-btn";
 const avaliacoesBtn =
   ".css-1o5pq7n > .MuiDrawer-root > .MuiPaper-root > :nth-child(1) > .MuiBox-root > .MuiList-root > :nth-child(3) > .MuiButtonBase-root";
+const avaliarBtn = "#buttonAvaliar";
+const excluirBtnInscricao = ".MuiButton-containedSecondary";
+const confirmarExcluirBtnInscricao =
+  ".MuiDialogActions-root > .MuiButton-containedSecondary";
+const aprovarBtn = ".MuiList-root > [tabindex='0']";
+const buscarBtnAvaliacao = ".css-1t62lt9 > .MuiButtonBase-root";
+const resultadosBuscaAvaliacao =
+  "[data-field='emailCandidato'] > .MuiDataGrid-cellContent";
 const inscricoesBtn =
   ".css-1o5pq7n > .MuiDrawer-root > .MuiPaper-root > :nth-child(1) > .MuiBox-root > .MuiList-root > :nth-child(2) > .MuiButtonBase-root";
 
@@ -55,8 +63,8 @@ const nomeNovoErrorTxt = "#novo-usuario > :nth-child(1) > .MuiTypography-root";
 const nomeEditErrorTxt =
   "#editar-usuario > :nth-child(1) > .MuiTypography-root";
 const emailNovoErrorTxt = ":nth-child(2) > .MuiTypography-root";
-const emailEditErrorTxt = "#perfil-editar-form > div:nth-child(2) > span";
-const emailEditError = "#editar-usuario > form:nth-child(2) > span";
+const emailEditErrorTxt = ":nth-child(2) > .MuiTypography-root";
+const emailEditError = "#edit-nome-email";
 const emailPerfilError = ":nth-child(2) > .MuiTypography-root";
 const senhaNovoErrorTxt = ":nth-child(3) > .MuiTypography-root";
 const senhaEditErrorTxt = ":nth-child(3) > .MuiTypography-root";
@@ -64,6 +72,7 @@ const confirmacaoSenhaErrorTxt = ":nth-child(4) > .MuiTypography-root";
 const confirmacaoSenhaEditErrorTxt = ":nth-child(4) > .MuiTypography-root";
 
 // TEXT
+const confirmDeleteInscricao = ".Toastify__toast-body > :nth-child(2)";
 const nomeGestorTxt = "#header-gestor-nome";
 const cargoGestorTxt = "#header-gestor-cargo";
 const buscaNomeTxt = "[data-field='nome'] > .MuiDataGrid-cellContent";
@@ -71,6 +80,8 @@ const buscaEmailTxt = "[data-field='email'] > .MuiDataGrid-cellContent";
 const cadastroSucessTxt = ".Toastify__toast-body > :nth-child(2)";
 const deletarUserSucessTxt = ".Toastify__toast-body > :nth-child(2)";
 const resultadoBusca = "[data-field='email'] > .MuiDataGrid-cellContent";
+const resultadoBuscaInscricoes =
+  "[data-field='email'] > .MuiDataGrid-cellContent";
 export default class Dashboardpage {
   fillFieldNome(text) {
     basePage.fillInput(nomeInput, text);
@@ -106,6 +117,10 @@ export default class Dashboardpage {
 
   clickBtnDashboard() {
     basePage.click(dashboardBtn);
+  }
+
+  clickBtnVoltar() {
+    basePage.click(voltarBtn);
   }
 
   clickBtnCadastrar() {
@@ -261,7 +276,7 @@ export default class Dashboardpage {
 
   editGestor(userEdit) {
     this.fillFieldNomeEdit(userEdit.name);
-    this.fillFieldNomeEdit(userEdit.email);
+    this.fillFieldEmailEdit(userEdit.email);
     this.clickBtnConfimarEdit();
   }
 
@@ -269,6 +284,13 @@ export default class Dashboardpage {
     basePage.validateText(
       emailEditErrorTxt,
       "Só é válido o email com @dbccompany.com.br"
+    );
+  }
+
+  validateDeleteInscricao() {
+    basePage.validateText(
+      confirmDeleteInscricao,
+      "Você deletou todos os dados desse candidato!"
     );
   }
 
@@ -284,7 +306,7 @@ export default class Dashboardpage {
 
   validatePerfilErrorEmailNaoDBC(userNaoDBC) {
     this.clickBtnPerfil(perfilBtn);
-    basePage.click(voltarBtn);
+    this.clickBtnVoltar();
     this.clickBtnPerfil(perfilBtn);
     basePage.clearInput(emailPerfilInput);
     basePage.fillInput(emailPerfilInput, userNaoDBC.email);
@@ -293,5 +315,42 @@ export default class Dashboardpage {
       emailPerfilError,
       "Só é válido o email com @dbccompany.com.br"
     );
+  }
+
+  listInscricao(email) {
+    this.clickBtnInscricoes();
+    this.fillFieldPesquisaInscricoes(email);
+    this.clickBtnBuscarInscricao();
+    basePage.time(2000);
+    this.clickResultadoBuscaInscricoes();
+  }
+
+  evaluateInscricoes() {
+    basePage.click(avaliarBtn);
+    basePage.time(2000);
+    basePage.click(aprovarBtn);
+    this.clickBtnVoltar();
+  }
+
+  clickResultadoBuscaInscricoes() {
+    basePage.click(resultadoBuscaInscricoes);
+  }
+
+  clickBtnBuscarAvaliacao() {
+    basePage.click(buscarBtnAvaliacao);
+  }
+
+  clickResultadoBuscaAvaliacao() {
+    basePage.click(resultadosBuscaAvaliacao);
+  }
+
+  deletarInscricao(email) {
+    this.clickBtnAvaliacoes();
+    this.fillFieldPesquisaInscricoes(email);
+    this.clickBtnBuscarAvaliacao();
+    basePage.time(2000);
+    this.clickResultadoBuscaAvaliacao();
+    basePage.click(excluirBtnInscricao);
+    basePage.click(confirmarExcluirBtnInscricao);
   }
 }

@@ -38,4 +38,10 @@ export default class LoginPage {
   validateRedirecionarParaInscricao() {
     basePage.validateText(inscricaoTitle, "Informações Cadastrais");
   }
+
+  login(user) {
+    this.fillFieldEmail(user.email);
+    this.fillFieldPassword(user.password);
+    this.clickBtnFazerLogin();
+  }
 }

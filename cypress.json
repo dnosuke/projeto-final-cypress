@@ -1,4 +1,7 @@
 {
+  "env": {
+    "baseUrl": "https://front-vemser.vercel.app/"
+  },
   "video": false, 
   "testFiles": "**/steps/*.*", 
   "chromeWebSecurity": false,

@@ -14,7 +14,7 @@ context("Inscrição", () => {
     loginPage.clickBtnRegistrar();
   });
   it("Validar inscrição de candidato com sucesso", () => {
-    let email = faker.internet.exampleEmail();
+    let email = "candidato@gmail.com";
     cy.allure().feature("Inscrição").story("Dados válidos");
     candidatePage.fillCadastroCandidato(candidate1, email);
     candidatePage.fillFormulario(candidate1);
@@ -22,7 +22,7 @@ context("Inscrição", () => {
     basePage.time(2000);
   });
 
-  it("Validar inscrição de candidato com dados válidos e marcando não para 'Você é matriculado em algum curso de graduação ou técnico?' retorna mensagem de erro", () => {
+  it("Validar inscrição de candidato com dados válidos e marcando 'Não' para 'Você é matriculado em algum curso de graduação ou técnico?' retorna mensagem de erro", () => {
     cy.allure().feature("Inscrição").story("Dados válidos");
     candidatePage.fillCadastroCandidato(
       candidate1,
