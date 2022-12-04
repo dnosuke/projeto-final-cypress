@@ -95,6 +95,10 @@ export default class Dashboardpage {
     basePage.select(cargoSelect, "Administrador");
   }
 
+  selectColaborador() {
+    basePage.select(cargoSelect, "Colaborador");
+  }
+
   clickBtnSair() {
     basePage.click(sairBtn);
   }
@@ -212,6 +216,23 @@ export default class Dashboardpage {
     basePage.validateText(cadastroSucessTxt, "Usuário cadastrado com sucesso");
   }
 
+  validateCadastroInvalido() {
+    basePage.time(2000);
+    basePage.validateText(nomeNovoErrorTxt, "O nome é obrigatório");
+    basePage.validateText(
+      emailNovoErrorTxt,
+      "Só é válido o email com @dbccompany.com.br"
+    );
+    basePage.validateText(
+      senhaNovoErrorTxt,
+      "A senha deve ter no mínimo 8 caracteres"
+    );
+    basePage.validateText(
+      confirmacaoSenhaErrorTxt,
+      "A confirmação de senha é obrigatória"
+    );
+  }
+
   validateColaboradorLogado() {
     basePage.validateText(cargoGestorTxt, "colaborador");
   }
@@ -264,11 +285,38 @@ export default class Dashboardpage {
     this.clickBtnCadastrar();
   }
 
+  createNovoColaborador(newUser) {
+    this.clickBtnNovoUsuario();
+    this.fillFieldNomeNovoUsuario(newUser.name);
+    this.fillFieldEmailNovoUsuario(newUser.email);
+    this.fillFieldSenhaNovoUsuario(newUser.password);
+    this.fillFieldConfirmaSenhaNovoUsuario(newUser.password);
+    this.clickRadioColaborador();
+    this.clickBtnCadastrar();
+  }
+
+  createNovoColaboradorInvalido() {
+    this.clickBtnNovoUsuario();
+    this.clickRadioColaborador();
+    this.clickBtnCadastrar();
+  }
+
   listGestor(user) {
     basePage.clearInput(nomeInput);
     this.fillFieldNome(user.name);
     basePage.clearInput(emailInput);
     this.fillFieldEmail(user.email);
+    this.clickBtnBuscar();
+    basePage.time(2000);
+    basePage.click(resultadoBusca);
+  }
+
+  listColaborador(user) {
+    basePage.clearInput(nomeInput);
+    this.fillFieldNome(user.name);
+    basePage.clearInput(emailInput);
+    this.fillFieldEmail(user.email);
+    this.selectColaborador();
     this.clickBtnBuscar();
     basePage.time(2000);
     basePage.click(resultadoBusca);

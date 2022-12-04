@@ -30,7 +30,7 @@ context("Login", () => {
     loginPage.fillFieldEmail("lucas");
     loginPage.fillFieldPassword("123");
     loginPage.clickBtnFazerLogin();
-    loginPage.validateLoginError();
+    loginPage.validateCampoEmailError();
   });
 
   it("Validar fazer login com Email Invalido retorna mensagem de erro 'Email ou senha inválidos' ", () => {
@@ -49,10 +49,10 @@ context("Login", () => {
     loginPage.validateLoginError();
   });
 
-  it("Validar Fazer login sem preencher campos retorna mensagem de erro 'Email ou senha inválidos'", () => {
+  it("Validar Fazer login sem preencher campos retorna mensagem de erro", () => {
     cy.allure().feature("Login").story("Dados inválidos");
     loginPage.clickBtnFazerLogin();
-    loginPage.validateLoginError();
+    loginPage.validateLoginCamposVaziosError();
   });
 
   it("Validar clicar no botao inscrever-se redireciona para página de inscrição", () => {

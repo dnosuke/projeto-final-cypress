@@ -1,6 +1,6 @@
 {
   "env": {
-    "baseUrl": "https://front-vemser.vercel.app/"
+    "baseUrl": "http://vemser-dbc.dbccompany.com.br:39000/vemser/vemvemser-front"
   },
   "video": false, 
   "testFiles": "**/steps/*.*", 
